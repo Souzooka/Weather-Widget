@@ -11,9 +11,28 @@ function getData(source, element, eFunc) {
 }
 
 function addDataToPage(source, data, element) {
-  const newH2 = document.createElement('h2');
-  newH2.innerHTML = data.name;
-  element.appendChild(newH2);
+  console.log(data)
+  const forecastContainer = document.createElement('div');
+  const areaName = document.createElement('h1');
+
+  areaName.innerHTML = data.city.name;
+
+  element.appendChild(areaName);
+  element.appendChild(forecastContainer);
+
+  for (let i = 0; i <= 32; i += 8) {
+    const newForecast = document.createElement('div');
+    const time = document.createElement('h2');
+    const temperature = document.createElement('p');
+
+    time.innerHTML = data.list[i].dt_txt;
+    temperature.innerHTML = `Temperature:
+      ${Math.floor(convertKelvinToFahrenheit(data.list[i].main.temp))}* F`;
+
+    forecastContainer.appendChild(newForecast);
+    newForecast.appendChild(time);
+    newForecast.appendChild(temperature);
+  }
 }
 
 function convertKelvinToFahrenheit(num) {
@@ -39,6 +58,6 @@ document.querySelector('#btn-weather').addEventListener('click', () => {
   console.log(zipCode);
   const container = document.querySelector('#contentContainer');
   clearInfo();
-  getData(`http://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&appid=${API_KEY}`,
+  getData(`http://api.openweathermap.org/data/2.5/forecast?zip=${zipCode},us&appid=${API_KEY}`,
     container, addDataToPage);
 });
