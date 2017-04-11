@@ -1,0 +1,12 @@
+#zipcode-input {
+  margin-left: 25px;
+}
+
+#content-container h1 {
+  text-align: center;
+}
+
+#forecast-container {
+  display: flex;
+  justify-content: space-around;
+}
