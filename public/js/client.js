@@ -11,7 +11,9 @@ function getData(source, element, eFunc) {
 }
 
 function addDataToPage(source, data, element) {
-  console.log(data);
+  const newH2 = document.createElement('h2');
+  newH2.innerHTML = data.name;
+  element.appendChild(newH2);
 }
 
 function convertKelvinToFahrenheit(num) {
@@ -23,10 +25,20 @@ function convertKelvinToFahrenheit(num) {
   return num;
 }
 
+function clearInfo() {
+  const contentContainer = document.querySelector('#contentContainer');
+  if (contentContainer) {
+    while (contentContainer.firstChild) {
+      contentContainer.removeChild(contentContainer.firstChild);
+    }
+  }
+}
+
 document.querySelector('#btn-weather').addEventListener('click', () => {
   const zipCode = document.querySelector('#city-input').value;
   console.log(zipCode);
   const container = document.querySelector('#contentContainer');
+  clearInfo();
   getData(`http://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&appid=${API_KEY}`,
     container, addDataToPage);
 });
